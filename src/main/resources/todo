@@ -1,0 +1,16 @@
+1. JDBC connection
+2.Entity red (синее не описывать)
+3.Пользователь покупает абонемент(могутт быть разные) с набором упражнений, а тренер отмечает упражнения
+как пройденные (проеденные это и есть назаначение),
+4.DAO
+5.Services
+
+DAO Abonement, abonement_type,
+++++++++++++++++++
+вопросы
+проверить даты из Sql
+составные таблицы user role
+набросать скелет сервисов
+singletone connection?
+дата в классе UserExercise поменял на sqlDate
+добавил поле long exerciseId в UserExercise
