@@ -20,8 +20,8 @@ public class CommandProvider {
     }
 
     public Command getCommand(String nameOfCommand){
-        Command command = null;
-        CommandType commandType = null;
+        Command command;
+        CommandType commandType;
         try {
             commandType = CommandType.valueOf(nameOfCommand.toUpperCase());
             command = commands.get(commandType);

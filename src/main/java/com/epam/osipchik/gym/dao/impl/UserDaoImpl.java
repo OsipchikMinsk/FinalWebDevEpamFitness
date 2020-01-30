@@ -7,18 +7,18 @@ import java.sql.*;
 public class UserDaoImpl implements UserDao{
 
     @Override
-    public User getUser(long id)  {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
-        try {
-            try(Connection connection = databaseHandler.getDbConnection()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT* FROM user WHERE ID=" + id);
-                ResultSet resultSet = ps.executeQuery("SELECT* FROM user WHERE ID=" + id);
-                if (resultSet.next()) {
-                    return extractUserFromResultSet(resultSet);
-                }
+    public User getUser(long id) {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT* FROM user WHERE ID=" + id);
+            ResultSet resultSet = ps.executeQuery("SELECT* FROM user WHERE ID=" + id);
+            if (resultSet.next()) {
+                return extractUserFromResultSet(resultSet);
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
+
         }
         return null;
     }
@@ -30,15 +30,25 @@ public class UserDaoImpl implements UserDao{
         user.setEmail(rs.getString("EMAIL"));
         return user;
     }
+
     @Override
     public User getUserByEmail(String email) {
-    //todo   для авторизации может быть
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT *FROM user WHERE EMAIL=" + email);
+            ResultSet resultSet = ps.executeQuery("SELECT * FROM user WHERE EMAIL=" + email);
+            if (resultSet.next()) {
+                return extractUserFromResultSet(resultSet);
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public User createUser(User user) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()){
             PreparedStatement ps = connection.prepareStatement("INSERT INTO user VALUES (NULL, ?, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -62,7 +72,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public boolean updateUser(User user) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "UPDATE user SET NAME=?, SURNAME=?, EMAIL=?,WHERE ID=?");
@@ -80,7 +90,7 @@ public class UserDaoImpl implements UserDao{
     @Override
     public boolean deleteUser(User user) {
         long id = user.getId();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement("DELETE FROM user WHERE ID=" + id);
             int result = ps.executeUpdate("DELETE FROM user WHERE ID=" + id);
@@ -93,7 +103,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public void setUserPassHash(long id, String passHash) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT user_id FROM user_password WHERE user_id =?");
@@ -119,7 +129,7 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public String getUserPassHash(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         String result = "";
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(

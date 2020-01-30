@@ -9,7 +9,7 @@ public class DaoFactory {
     private final AbonementTypeDao abonementTypeDao = new AbonementTypeDaoImpl();
     private final ExerciseDao exerciseDao = new ExerciseDaoImpl();
     private final UserExerciseDao userExerciseDao = new UserExerciseDaoImpl();
-
+    private final UserCommentDao userCommentDao = new UserCommentDaoImpl();
 
 
     public DaoFactory() {
@@ -34,7 +34,12 @@ public class DaoFactory {
     public ExerciseDao getExerciseDao() {
         return exerciseDao;
     }
+
     public UserExerciseDao getUserExerciseDao() {
         return userExerciseDao;
+    }
+
+    public UserCommentDao getUserCommentDao() {
+        return userCommentDao;
     }
 }

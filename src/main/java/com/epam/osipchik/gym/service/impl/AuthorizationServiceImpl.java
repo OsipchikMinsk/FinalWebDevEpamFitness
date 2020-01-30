@@ -20,7 +20,9 @@ public class AuthorizationServiceImpl  implements AuthorizationService{
     }
 
     //todo pack to private after tests
+    @Override
     public String convertPasswordToHash(String password) {
+
         return DigestUtils.sha256Hex(password);
     }
 }

@@ -10,7 +10,7 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
 
     @Override
     public AbonementType create(AbonementType abonementType) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()){
 
             PreparedStatement ps = connection.prepareStatement("INSERT INTO abonement_type VALUES (NULL, ?, ?)",
@@ -35,7 +35,7 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
 
     @Override
     public AbonementType getAbonemenTypetById(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try {
             try (Connection connection = databaseHandler.getDbConnection()) {
                 PreparedStatement ps = connection.prepareStatement("SELECT* FROM abonement_type WHERE ID=" + id);
@@ -58,7 +58,7 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
     }
     @Override
     public boolean update(AbonementType abonementType) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try(Connection connection = databaseHandler.getDbConnection()) {
           PreparedStatement ps = connection.prepareStatement(
                   "UPDATE abonement_type SET NAME=?,PRICE=? WHERE ID=?");
@@ -74,7 +74,7 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
     @Override
     public boolean delete(AbonementType abonementType) {
         long id = abonementType.getId();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try(Connection connection = databaseHandler.getDbConnection()) {
           PreparedStatement ps = connection.prepareStatement(
                   "DELETE FROM abonement_type WHERE ID="+id);

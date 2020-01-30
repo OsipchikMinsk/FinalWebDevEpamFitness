@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO">
+
+    <appenders>
+        <File name="FileLogs" fileName="logs/app.log">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </File>
+    </appenders>
+
+    <loggers>
+        <root level="debug">
+            <appender-ref ref="FileLogs" level="info"/>
+        </root>
+    </loggers>
+</configuration>

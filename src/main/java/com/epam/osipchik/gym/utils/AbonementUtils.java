@@ -1,7 +1,6 @@
 package com.epam.osipchik.gym.utils;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.Calendar;
 

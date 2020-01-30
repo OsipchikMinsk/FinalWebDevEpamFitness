@@ -11,7 +11,7 @@ import java.sql.*;
 public class ExerciseDaoImpl implements ExerciseDao {
     @Override
     public Exercise createExercise(Exercise exercise) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO exercise VALUES (NULL, ?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -29,7 +29,7 @@ public class ExerciseDaoImpl implements ExerciseDao {
 
     @Override
     public Exercise getExerciseById(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT* FROM exercise WHERE ID=" + id);
@@ -51,7 +51,7 @@ public class ExerciseDaoImpl implements ExerciseDao {
 
     @Override
     public boolean updateExercise(Exercise exercise) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "UPDATE exercise SET NAME=?, WHERE ID=?");
@@ -67,7 +67,7 @@ public class ExerciseDaoImpl implements ExerciseDao {
     @Override
     public boolean deleteExercise(Exercise exercise) {
         long id = exercise.getId();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "DELETE FROM exercise WHERE ID=" + id);

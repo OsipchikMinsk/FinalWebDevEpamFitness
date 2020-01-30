@@ -9,7 +9,7 @@ import java.sql.*;
 public class UserExerciseDaoImpl implements UserExerciseDao {
     @Override
     public UserExercise createUserExercise(UserExercise userExercise) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "INSERT INTO user_exercise VALUES (NULL,?,?,?,?)",
@@ -31,7 +31,7 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
 
     @Override
     public UserExercise getUserExerciseById(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT* FROM user_exercise WHERE ID=" + id);
@@ -57,7 +57,7 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
 
     @Override
     public boolean updateUserExercise(UserExercise userExercise) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "UPDATE user_exercise SET EXECUTION_DATE=?,APPROVED=?,DONE=?," +
@@ -77,7 +77,7 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
     @Override
     public boolean deleteUserExercise(UserExercise userExercise) {
         long id = userExercise.getId();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "DELETE FROM user_exercise WHERE ID=" + id);

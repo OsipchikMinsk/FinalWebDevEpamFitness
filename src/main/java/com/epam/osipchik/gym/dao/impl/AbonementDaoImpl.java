@@ -10,7 +10,7 @@ public class AbonementDaoImpl implements AbonementDao {
 
     @Override
     public Abonement create(Abonement abonement) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()){
 
             PreparedStatement ps = connection.prepareStatement("INSERT INTO abonement VALUES (NULL, ?, ?, ?, ?, ?, ?)",
@@ -36,7 +36,7 @@ public class AbonementDaoImpl implements AbonementDao {
     }
     @Override
     public Abonement getAbonementById(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "SELECT*FROM abonement WHERE ID=" + id);
@@ -63,7 +63,7 @@ public class AbonementDaoImpl implements AbonementDao {
 
     @Override
     public boolean update(Abonement abonement) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "UPDATE abonement SET USER_ID=?,TYPE_ID=?,START_DATE=?,FINISH_DATE=?," + //проверить запрос
@@ -85,7 +85,7 @@ public class AbonementDaoImpl implements AbonementDao {
     @Override
     public boolean delete(Abonement abonement) {
         long id = abonement.getId();
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
                     "DELETE FROM abonement WHERE ID=" + id);
@@ -100,7 +100,7 @@ public class AbonementDaoImpl implements AbonementDao {
 
     @Override
     public int getAbonementsCountByUserId(long id) {
-        DatabaseHandler databaseHandler = new DatabaseHandler();
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         int result;
         try(Connection connection = databaseHandler.getDbConnection()) {
             //"SELECT* FROM User (SELECT CONT(*) FROM abonement where user.id = abonement.user.id )>5"

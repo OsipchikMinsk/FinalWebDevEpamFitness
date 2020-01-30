@@ -10,6 +10,22 @@
 </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
+        <url-pattern>/fitrun</url-pattern>
     </servlet-mapping>
+
+    <session-config>
+        <session-timeout>10</session-timeout>
+    </session-config>
+
+ <!--   <welcome-file-list>
+        <welcome-file>main.jsp</welcome-file>
+    </welcome-file-list>-->
+
+    <context-param>
+        <param-name>isLog4jAutoInitializationDisabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
+
+
 </web-app>

@@ -23,18 +23,19 @@ public class Controller extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setContentType("text/html;charset=UTF-8;charset=cp1251");
         String commandType;
         Command command;
         commandType = request.getParameter(RequestParameterValue.COMMAND_NAME);
         System.out.println(commandType);
         command = commandProvider.getCommand(commandType);
+
         command.execute(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(request.getParameter(RequestParameterValue.COMMAND_NAME)==null){
-            request.getRequestDispatcher("/index.jsp").forward(request,response);
+      if(request.getParameter(RequestParameterValue.COMMAND_NAME)==null){
+            request.getRequestDispatcher("/jsp/index.jsp").forward(request,response);
         }else {
             doPost(request,response);
         }
