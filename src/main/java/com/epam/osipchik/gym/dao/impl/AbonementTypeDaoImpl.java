@@ -3,15 +3,17 @@ package com.epam.osipchik.gym.dao.impl;
 import com.epam.osipchik.gym.config.DatabaseHandler;
 import com.epam.osipchik.gym.dao.AbonementTypeDao;
 import com.epam.osipchik.gym.entity.abonement.AbonementType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class AbonementTypeDaoImpl implements AbonementTypeDao {
-
+private static final Logger logger = LogManager.getLogger(AbonementTypeDaoImpl.class);
     @Override
-    public AbonementType create(AbonementType abonementType) {
+    public AbonementType create(AbonementType abonementType) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        try (Connection connection = databaseHandler.getDbConnection()){
+        try (Connection connection = databaseHandler.getDbConnection()) {
 
             PreparedStatement ps = connection.prepareStatement("INSERT INTO abonement_type VALUES (NULL, ?, ?)",
                     Statement.RETURN_GENERATED_KEYS);
@@ -24,28 +26,32 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
                 if (generatedKeys.next()) {
                     abonementType.setId(generatedKeys.getLong(1));
                 }
+                logger.info("Created AbonementType" + abonementType);
                 return abonementType;
             }
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
         return null;
     }
 
     @Override
-    public AbonementType getAbonemenTypetById(long id) {
+    public AbonementType getAbonemenTypetById(long id) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try {
             try (Connection connection = databaseHandler.getDbConnection()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT* FROM abonement_type WHERE ID=" + id);
-                ResultSet resultSet = ps.executeQuery("SELECT* FROM abonement_type WHERE ID=" + id);
+                PreparedStatement ps = connection.prepareStatement("SELECT* FROM abonement_type WHERE ID=?");
+                ps.setLong(1, id);
+                ResultSet resultSet = ps.executeQuery();
                 if (resultSet.next()) {
                     return extractAbonementTypeFromResultSet(resultSet);
                 }
             }
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
         return null;
     }
@@ -57,32 +63,36 @@ public class AbonementTypeDaoImpl implements AbonementTypeDao {
         return abonementType;
     }
     @Override
-    public boolean update(AbonementType abonementType) {
+    public boolean update(AbonementType abonementType) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        try(Connection connection = databaseHandler.getDbConnection()) {
-          PreparedStatement ps = connection.prepareStatement(
-                  "UPDATE abonement_type SET NAME=?,PRICE=? WHERE ID=?");
-          ps.setString(1,abonementType.getName());
-          ps.setInt(2,abonementType.getPrice());
-          ps.setLong(3,abonementType.getId());
-          return ps.executeUpdate()==1;
-        }catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement(
+                    "UPDATE abonement_type SET NAME=?,PRICE=? WHERE ID=?");
+            ps.setString(1, abonementType.getName());
+            ps.setInt(2, abonementType.getPrice());
+            ps.setLong(3, abonementType.getId());
+            logger.info("Update AbonementType" + abonementType);
+            return ps.executeUpdate() == 1;
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
         }
-        return false;
     }
+
     @Override
-    public boolean delete(AbonementType abonementType) {
+    public boolean delete(AbonementType abonementType) throws DaoException {
         long id = abonementType.getId();
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        try(Connection connection = databaseHandler.getDbConnection()) {
-          PreparedStatement ps = connection.prepareStatement(
-                  "DELETE FROM abonement_type WHERE ID="+id);
-          int result = ps.executeUpdate("DELETE FROM abonement_type WHERE ID="+id);
-          return result==1;
-        }catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement(
+                    "DELETE FROM abonement_type WHERE ID=?");
+            ps.setLong(1, id);
+            int result = ps.executeUpdate();
+            logger.info("Deleted AbonementType" + abonementType);
+            return result == 1;
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
         }
-        return false;
     }
 }

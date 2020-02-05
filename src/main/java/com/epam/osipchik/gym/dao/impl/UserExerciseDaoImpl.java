@@ -3,12 +3,15 @@ package com.epam.osipchik.gym.dao.impl;
 import com.epam.osipchik.gym.config.DatabaseHandler;
 import com.epam.osipchik.gym.dao.UserExerciseDao;
 import com.epam.osipchik.gym.entity.exercise.UserExercise;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
 public class UserExerciseDaoImpl implements UserExerciseDao {
+    private static final Logger logger = LogManager.getLogger(UserExerciseDaoImpl.class);
     @Override
-    public UserExercise createUserExercise(UserExercise userExercise) {
+    public UserExercise createUserExercise(UserExercise userExercise) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
@@ -22,25 +25,28 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 userExercise.setId(generatedKeys.getLong(1));
             }
+            logger.info("Created " + userExercise);
             return userExercise;
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
-        return null;
     }
 
     @Override
-    public UserExercise getUserExerciseById(long id) {
+    public UserExercise getUserExerciseById(long id) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
-                    "SELECT* FROM user_exercise WHERE ID=" + id);
-            ResultSet resultSet = ps.executeQuery("SELECT* FROM user_exercise WHERE ID=" + id);
+                    "SELECT* FROM user_exercise WHERE ID=?");
+            ps.setLong(1,id);
+            ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 return extractUserExerciseFromResultSet(resultSet);
             }
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
         return null;
     }
@@ -56,7 +62,7 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
     }
 
     @Override
-    public boolean updateUserExercise(UserExercise userExercise) {
+    public boolean updateUserExercise(UserExercise userExercise) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
@@ -67,25 +73,28 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
             ps.setBoolean(3, userExercise.isDone());
             ps.setLong(4, userExercise.getExerciseId());
             ps.setLong(5, userExercise.getId());
+            logger.info("Update " + userExercise);
             return ps.executeUpdate() == 1;
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
-        return false;
     }
 
     @Override
-    public boolean deleteUserExercise(UserExercise userExercise) {
+    public boolean deleteUserExercise(UserExercise userExercise) throws DaoException {
         long id = userExercise.getId();
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
-                    "DELETE FROM user_exercise WHERE ID=" + id);
-            int result = ps.executeUpdate("DELETE FROM user_exercise WHERE ID=" + id);
+                    "DELETE FROM user_exercise WHERE ID=?");
+            ps.setLong(1,id);
+            int result = ps.executeUpdate();
+            logger.info("Deleted " + userExercise);
             return result == 1;
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+            logger.error(e);
+            throw new DaoException(e);
         }
-        return false;
     }
 }

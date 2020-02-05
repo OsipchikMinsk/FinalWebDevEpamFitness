@@ -19,6 +19,7 @@ public class DatabaseHandler extends DataBaseConfig {
         return instance;
     }
 
+    //todo connection pool connection proxy
 
 
     public Connection getDbConnection()
@@ -26,8 +27,7 @@ public class DatabaseHandler extends DataBaseConfig {
         String connectionPath = "jdbc:mysql://" + dbHost + ":"
                 + dbPort + "/" + dbName;
         Class.forName("com.mysql.jdbc.Driver");
+        return  dbConnection = DriverManager.getConnection(connectionPath, dbUser, dbPass);
 
-        dbConnection = DriverManager.getConnection(connectionPath, dbUser, dbPass);
-        return dbConnection;
     }
 }

@@ -4,6 +4,7 @@ public enum Roles {
     ADMINISTRATOR,
     CLIENT,
     COACH,
-    PERSONAL_COACH
+    PERSONAL_COACH,
+    UNREGISTERED_USER
 
 }

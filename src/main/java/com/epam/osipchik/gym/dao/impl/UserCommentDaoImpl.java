@@ -66,8 +66,9 @@ public class UserCommentDaoImpl implements UserCommentDao {
     public Comment getCommentById(long id) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM comment WHERE ID=" + id);
-            ResultSet resultSet = ps.executeQuery("SELECT * FROM comment WHERE ID=" + id);
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM comment WHERE ID=?");
+            ps.setLong(1,id);
+            ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {
                 return extractCommentFromResultSet(resultSet);
             } else {
@@ -105,7 +106,8 @@ public class UserCommentDaoImpl implements UserCommentDao {
         int result;
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM comment WHERE ID=" + id);
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM comment WHERE ID=?");
+            ps.setLong(1,id);
             result = ps.executeUpdate();
             if (result == 1) {
                 return true;

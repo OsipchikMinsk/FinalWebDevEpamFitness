@@ -28,12 +28,12 @@ CREATE TABLE `gym`.`abonement` (
   CONSTRAINT `abonement_user_id`
     FOREIGN KEY (`USER_ID`)
     REFERENCES `gym`.`user` (`ID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `abonement_type_id`
     FOREIGN KEY (`TYPE_ID`)
     REFERENCES `gym`.`abonement_type` (`ID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
 CREATE TABLE `gym`.`exercise` (
@@ -68,7 +68,7 @@ CREATE TABLE `gym`.`user_exercise` (
   CONSTRAINT `user_exercise_id`
     FOREIGN KEY (`EXERCISE_ID`)
     REFERENCES `gym`.`exercise` (`ID`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION);
 
 CREATE TABLE `gym`.`abonement_type_exercise` (
@@ -93,6 +93,12 @@ CREATE TABLE `gym`.`role` (
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
 
+  INSERT INTO `gym`.`role` (name) VALUES ("ADMIN");
+  INSERT INTO `gym`.`role` (name) VALUES ("CLIENT");
+  INSERT INTO `gym`.`role` (name) VALUES("COACH");
+  INSERT INTO `gym`.`role` (name) VALUES("PERSONAL_COACH");
+  INSERT INTO `gym`.`role` (name) VALUES("UNREGISTERED_USER");
+
 CREATE TABLE `gym`.`user_role` (
   `USER_ID` INT NOT NULL,
   `ROLE_ID` INT NOT NULL,
@@ -113,7 +119,14 @@ CREATE TABLE `gym`.`wallet` (
   `ID` INT NOT NULL,
   `AMOUNT` DECIMAL NULL,
   PRIMARY KEY (`ID`),
-  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE);
+  UNIQUE INDEX `ID_UNIQUE` (`ID` ASC) VISIBLE),
+  CONSTRAINT `vallet_user_id`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `gym`.`user` (`ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION;
+
+  ;
 
 CREATE TABLE `gym`.`user_password` (
     `user_id` INT NOT NULL,

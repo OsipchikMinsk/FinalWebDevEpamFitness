@@ -67,4 +67,15 @@ public class UserExercise {
     public int hashCode() {
         return Objects.hash(id, executionDate, isApproved, isDone, exerciseId);
     }
+
+    @Override
+    public String toString() {
+        return "UserExercise{" +
+                "id=" + id +
+                ", executionDate=" + executionDate +
+                ", isApproved=" + isApproved +
+                ", isDone=" + isDone +
+                ", exerciseId=" + exerciseId +
+                '}';
+    }
 }

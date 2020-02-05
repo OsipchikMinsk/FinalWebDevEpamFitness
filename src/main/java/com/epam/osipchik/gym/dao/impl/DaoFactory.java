@@ -10,6 +10,8 @@ public class DaoFactory {
     private final ExerciseDao exerciseDao = new ExerciseDaoImpl();
     private final UserExerciseDao userExerciseDao = new UserExerciseDaoImpl();
     private final UserCommentDao userCommentDao = new UserCommentDaoImpl();
+    private final RoleDao roleDao = new RoleDaoImpl();
+
 
 
     public DaoFactory() {
@@ -41,5 +43,9 @@ public class DaoFactory {
 
     public UserCommentDao getUserCommentDao() {
         return userCommentDao;
+    }
+
+    public RoleDao getRoleDao() {
+        return roleDao;
     }
 }

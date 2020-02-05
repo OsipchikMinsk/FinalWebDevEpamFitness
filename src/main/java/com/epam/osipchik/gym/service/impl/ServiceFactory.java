@@ -1,10 +1,11 @@
 package com.epam.osipchik.gym.service.impl;
 
-import com.epam.osipchik.gym.service.AuthorizationService;
+import com.epam.osipchik.gym.service.UserAuthService;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
-    private final AuthorizationService authorizationService = new AuthorizationServiceImpl();
+    private final UserAuthService userService = new UserServiceImpl();
+
 
     public ServiceFactory() {
     }
@@ -13,7 +14,7 @@ public class ServiceFactory {
         return instance;
     }
 
-    public AuthorizationService getAuthorizationService() {
-        return authorizationService;
+    public UserAuthService getUserService() {
+        return userService;
     }
 }

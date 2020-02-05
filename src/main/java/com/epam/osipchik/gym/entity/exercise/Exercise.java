@@ -35,4 +35,12 @@ public class Exercise {
     public int hashCode() {
         return Objects.hash(id, name);
     }
+
+    @Override
+    public String toString() {
+        return "Exercise{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

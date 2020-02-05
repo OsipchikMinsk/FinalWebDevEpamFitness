@@ -14,3 +14,16 @@ DAO Abonement, abonement_type,
 singletone connection?
 дата в классе UserExercise поменял на sqlDate
 добавил поле long exerciseId в UserExercise
+comment userId?
+
+
+//todo roleDao c rud
+  todo user_RoleDao (когда )
+
+ сервисы comment добавить комментарий,
+
+
+ 04.02. переделать в базе данных на cascade
+
+ создать форму одного абонемента с кнопкой купить label
+

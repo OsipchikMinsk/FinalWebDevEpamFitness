@@ -1,11 +1,11 @@
-import com.epam.osipchik.gym.dao.AbonementDao;
-import com.epam.osipchik.gym.dao.AbonementTypeDao;
 import com.epam.osipchik.gym.dao.impl.*;
 import com.epam.osipchik.gym.entity.abonement.Abonement;
 import com.epam.osipchik.gym.entity.abonement.AbonementType;
 import com.epam.osipchik.gym.entity.user.User;
-import com.epam.osipchik.gym.service.AuthorizationService;
-import com.epam.osipchik.gym.service.impl.AuthorizationServiceImpl;
+import com.epam.osipchik.gym.service.UserAuthService;
+import com.epam.osipchik.gym.service.impl.ServiceException;
+import com.epam.osipchik.gym.service.impl.UserServiceImpl;
+import com.epam.osipchik.gym.service.impl.ServiceFactory;
 import com.epam.osipchik.gym.utils.AbonementUtils;
 import org.junit.Test;
 
@@ -18,11 +18,13 @@ public class UserTests {
    // private AbonementTypeDao abonementTypeDao = new AbonementTypeDaoImpl();
     //private AbonementDao abonementDao = new AbonementDaoImpl();
     private AbonementUtils abonementUtils = new AbonementUtils();
-    private AuthorizationService authorizationService = new AuthorizationServiceImpl();
+    private UserAuthService authorizationService = new UserServiceImpl();
+    //UserDataValidator userDataValidator = new UserDataValidator();
 
-    DaoFactory daoFactory = new DaoFactory();
+    DaoFactory daoFactory = DaoFactory.getInstance();
+    ServiceFactory serviceFactory = ServiceFactory.getInstance();
     @Test
-    public void userDbTest() {
+    public void userDbTest() throws DaoException {
         User user = new User();
         user.setName("testName");
         user.setSurname("testSurname");
@@ -34,13 +36,25 @@ public class UserTests {
     }
     @Test
     public void getUserByID() throws DaoException {
-        User user = daoFactory.getUserDao().getUser(26);
+        User user = daoFactory.getUserDao().getUser(41);
         System.out.println(user.getId() + user.getName());
+    }
+    @Test
+    public void getUserByEmail() throws DaoException {
+        String email="osipchikartem@gmail.com";
+        User user = daoFactory.getUserDao().getUserByEmail(email);
+        System.out.println(user.getEmail() + " " + user.getName());
+
+    }
+    @Test
+    public void deleteUser() throws DaoException {
+        User user = daoFactory.getUserDao().getUser(40);
+        daoFactory.getUserDao().deleteUser(user);
     }
 
 
     @Test
-    public void abonementWithUserTest() throws InterruptedException {
+    public void abonementWithUserTest() throws InterruptedException, DaoException {
 
         User user = new User();
         user.setName("testName");
@@ -75,7 +89,7 @@ public class UserTests {
     }
 
     @Test
-    public void userWithPasswordDbTest() {
+    public void userWithPasswordDbTest() throws DaoException {
         User user = new User();
         user.setName("testNameWithPass");
         user.setSurname("testSurnameWithPass");
@@ -88,13 +102,13 @@ public class UserTests {
     }
 
     @Test
-    public void updateUserPassTest() {
+    public void updateUserPassTest() throws DaoException {
 
         daoFactory.getUserDao().setUserPassHash( 25L, "asdasdasdad");
     }
 
     @Test
-    public void isAuthorizedTest() throws DaoException {
+    public void isAuthorizedTest() throws DaoException, ServiceException {
         Long userId = 25L;
         User user = daoFactory.getUserDao().getUser(userId);
 
@@ -108,4 +122,10 @@ public class UserTests {
             System.out.println("NO AUTH ");
         }
     }
+    /*@Test
+    public void isEmailValid(){
+        String email = "osipchik@tut.by";
+        System.out.println( UserDataValidator.isValidEmail(email));
+    }*/
+
 }

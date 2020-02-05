@@ -4,6 +4,8 @@ import com.epam.osipchik.gym.command.Command;
 import com.epam.osipchik.gym.command.CommandProvider;
 import com.epam.osipchik.gym.command.CommandType;
 import com.epam.osipchik.gym.controller.util.RequestParameterValue;
+import com.epam.osipchik.gym.dao.impl.DaoException;
+import com.epam.osipchik.gym.service.impl.ServiceException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ public class Controller extends HttpServlet {
         super();
     }
 
+    //todo method process
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8;charset=cp1251");
@@ -30,7 +33,12 @@ public class Controller extends HttpServlet {
         System.out.println(commandType);
         command = commandProvider.getCommand(commandType);
 
-        command.execute(request, response);
+        try {
+            command.execute(request, response);
+        } catch (DaoException | ServiceException e) {
+            e.printStackTrace();
+
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

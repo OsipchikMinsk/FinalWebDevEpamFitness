@@ -20,9 +20,9 @@
        <p>${userSurename}</p>
    </div>
 
-<%--<a href="registrationForm.jsp">Registration</a>--%>
+
 <div class="heder">
-   <input type="button" class="btn registr" onclick="window.location='registrationForm.jsp'" value="Registration"/>
+   <input type="button" class="btn registr" onclick="window.location='jsp/registrationForm.jsp'" value="Registration"/>
    <input type="button" class="btn signIn" onclick="window.location='authorization.jsp'" value="Sign in"/>
 </div>
 </body>
