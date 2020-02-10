@@ -41,7 +41,7 @@ public class UserDaoImpl implements UserDao{
     public User getUserByEmail(String email) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
-            PreparedStatement ps = connection.prepareStatement("SELECT *FROM user WHERE EMAIL=?");
+            PreparedStatement ps = connection.prepareStatement("SELECT *FROM user  WHERE EMAIL=?");
             ps.setString(1,email);
             ResultSet resultSet = ps.executeQuery();
             if (resultSet.next()) {

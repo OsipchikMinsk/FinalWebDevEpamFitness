@@ -6,12 +6,24 @@
 <head>
 
     <title>Exerscise</title>
+
+    <style>
+        <%@include file="css/main.css"%>
+
+    </style>
+
 </head>
 <body>
 
-   <%-- <jsp:forward page="WEB-INF/jsp/exersice.jsp"/>
-    <!--todo forward-->--%>
-<a href="jsp/registrationForm.jsp">Registration</a>
 
+   <div class="user">
+       <p>${userSurename} ${message}</p>
+   </div>
+
+
+<div class="header">
+   <input type="button" class="btn registr" onclick="window.location='jsp/registrationForm.jsp'" value="Registration"/>
+   <input type="button" class="btn signIn" onclick="window.location='jsp/authorization.jsp'" value="Sign in"/>
+</div>
 </body>
 </html>

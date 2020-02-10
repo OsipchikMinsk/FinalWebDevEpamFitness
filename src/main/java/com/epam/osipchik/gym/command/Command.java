@@ -1,5 +1,6 @@
 package com.epam.osipchik.gym.command;
 
+import com.epam.osipchik.gym.command.impl.CommandException;
 import com.epam.osipchik.gym.dao.impl.DaoException;
 import com.epam.osipchik.gym.service.impl.ServiceException;
 
@@ -10,5 +11,5 @@ import java.io.IOException;
 
 public interface Command {
     void execute(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException, DaoException, ServiceException;
+            throws IOException, ServletException, DaoException, ServiceException, CommandException;
 }

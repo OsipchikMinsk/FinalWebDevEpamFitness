@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocing="true" path="/fitrun">
+    <Resource
+            name="jdbc/gym"
+            type="javax.sql.DataSource"
+            username="root"
+            password="кщще"
+            driverClassName="com.mysql.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/gym?autoReconnect=true"
+            maxActive="4"
+            author="Container"
+            maxIdle="2"
+            maxWait="5000"
+            validationQuery="SELECT 1">
+    </Resource>
+</Context>

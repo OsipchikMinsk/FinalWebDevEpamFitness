@@ -13,4 +13,5 @@ public interface UserAuthService {
     String convertPasswordToHash(String password);
     boolean registerUser(User user, String password, String passwordConfirm) throws ServiceException;
     void setupDefaultUserRole(User user) throws DaoException;
+    User getUserByEmail (String email) throws DaoException, ServiceException;
 }

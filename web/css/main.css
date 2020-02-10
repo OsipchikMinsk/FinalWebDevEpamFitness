@@ -36,4 +36,14 @@
     opacity:1;
     transition: 0.5s;
 }
+.auth{
+    border-color: #2196F3;
+    color: chartreuse;
+}
+.auth:hover{
+    background-color: aqua ;
+    color: antiquewhite;
+    opacity: 1;
+    transition: 0.5s;
+}
 

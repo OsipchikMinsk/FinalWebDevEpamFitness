@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserAuthService {
             logger.error(e);
             throw  new ServiceException(e);
         }
-        return new User();
+        return null;
     }
 
     @Override
@@ -49,6 +49,18 @@ public class UserServiceImpl implements UserAuthService {
         System.out.println("start creating roles");
         Long roleId = roleDao.getRoleByName(Roles.CLIENT.name());
         roleDao.setUserRole(user.getId(), roleId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) throws ServiceException {
+        User user;
+        try {
+            user = userDao.getUserByEmail(email);
+            return user;
+        } catch (DaoException e) {
+            logger.error(e);
+            throw new ServiceException(e);
+        }
     }
 
     private boolean register(User user, String password) throws ServiceException {
@@ -69,4 +81,6 @@ public class UserServiceImpl implements UserAuthService {
     public String convertPasswordToHash(String password) {
         return DigestUtils.sha256Hex(password);
     }
+
+
 }

@@ -17,13 +17,13 @@
 
 
    <div class="user">
-       <p>${userSurename}</p>
+       <p>${userSurename} ${message}</p>
    </div>
 
 
-<div class="heder">
+<div class="header">
    <input type="button" class="btn registr" onclick="window.location='jsp/registrationForm.jsp'" value="Registration"/>
-   <input type="button" class="btn signIn" onclick="window.location='authorization.jsp'" value="Sign in"/>
+   <input type="button" class="btn signIn" onclick="window.location='jsp/authorization.jsp'" value="Sign in"/>
 </div>
 </body>
 </html>

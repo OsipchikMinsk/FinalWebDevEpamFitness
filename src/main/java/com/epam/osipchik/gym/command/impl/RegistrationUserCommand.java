@@ -1,6 +1,8 @@
 package com.epam.osipchik.gym.command.impl;
 
 import com.epam.osipchik.gym.command.Command;
+import com.epam.osipchik.gym.controller.util.JspTagName;
+import com.epam.osipchik.gym.controller.util.RequestAttributeValue;
 import com.epam.osipchik.gym.dao.impl.DaoException;
 import com.epam.osipchik.gym.dao.impl.DaoFactory;
 import com.epam.osipchik.gym.entity.user.User;
@@ -15,41 +17,33 @@ import java.io.IOException;
 
 
 public class RegistrationUserCommand implements Command {
-       ServiceFactory serviceFactory = ServiceFactory.getInstance();
+       private ServiceFactory serviceFactory = ServiceFactory.getInstance();
+       private static final String REGISTRATION_OK = "Registration is OK";
+       private static final String REGISTRATION_IS_FAIL = "Registration is fail";
+
        @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, DaoException, ServiceException {
-              System.out.println("start execute");
-           response.setContentType("text/html;charset=UTF-8");
-           // паттерн DTO
+           // паттерн DTO*/
            String name = request.getParameter("name");
            String surname = request.getParameter("surname");
            String email = request.getParameter("email");
            String password = request.getParameter("password");
            String passwordConfirm = request.getParameter("conf_password");
-
-           /*String passHash =
-                   serviceFactory.getUserService().convertPasswordToHash(password);*/
            User user = new User();
            user.setName(name);
            user.setSurname(surname);
            user.setEmail(email);
-// todo Services login и убрать dao только сервисы тут
-
-           //daoFactory.getUserDao().createUser(user);
-
-         /*  long id = user.getId();
-           daoFactory.getUserDao().setUserPassHash(id,passHash);*/
            boolean isRegistered = serviceFactory.getUserService().registerUser(user, password, passwordConfirm);
            if (isRegistered) {
                   serviceFactory.getUserService().setupDefaultUserRole(user);
+                  request.setAttribute(RequestAttributeValue.MESSAGE,REGISTRATION_OK);
                   //todo call setupRole
-
+           } else {
+                  request.setAttribute(RequestAttributeValue.MESSAGE,REGISTRATION_IS_FAIL);
            }
-// todo Add User_Role (find role for user and "INSERT INTO user_role values (user_id, role_id)"
            request.setAttribute("userSurename",surname);
-           request.getRequestDispatcher("/index.jsp").forward(request,response);
 
-
+           request.getRequestDispatcher(JspTagName.MAIN_PAGE).forward(request,response);
 
     }
 }
