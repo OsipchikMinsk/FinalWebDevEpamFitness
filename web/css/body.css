@@ -1,0 +1,24 @@
+.s1{
+    height: 100vh;
+    background-image: url("/image/dumbbell-equipment-fitness-flatlay-669578.jpg");
+}
+
+.go{
+    font-size: 30vh;
+    color: #e3ffef;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: #aaff9e; ;
+
+}
+div.go p{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 65%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+
+
+
+
+}

@@ -15,17 +15,24 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
-                    "INSERT INTO user_exercise VALUES (NULL,?,?,?,?)",
-                    Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO user_exercise VALUES (NULL,?, ?, ?, ?, ?)",
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setDate(1, userExercise.getExecutionDate());
             ps.setBoolean(2, userExercise.isApproved());
             ps.setBoolean(3, userExercise.isDone());
             ps.setLong(4, userExercise.getExerciseId());
-            if (ps.executeUpdate() == 1) {
+            ps.setLong(5, userExercise.getUserId());
+            int state = ps.executeUpdate();
+            System.out.println("STATE: " + state);
+            if (state == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
-                userExercise.setId(generatedKeys.getLong(1));
+                System.out.println(generatedKeys);
+                if (generatedKeys != null && generatedKeys.next()) {
+                    userExercise.setId(generatedKeys.getLong(1));
+                }
             }
             logger.info("Created " + userExercise);
+            System.out.println("created user exersize: " + userExercise.getUserId());
             return userExercise;
         } catch (ClassNotFoundException | SQLException e) {
             logger.error(e);
@@ -58,6 +65,7 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
         userExercise.setApproved(rs.getBoolean("APPROVED"));
         userExercise.setDone(rs.getBoolean("DONE"));
         userExercise.setExerciseId(rs.getLong("EXERCISE_ID"));
+        userExercise.setUserId(rs.getLong("USER_ID"));
         return userExercise;
     }
 
@@ -66,13 +74,18 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement(
-                    "UPDATE user_exercise SET EXECUTION_DATE=?,APPROVED=?,DONE=?," +
-                            "EXERCISE_ID=?,WHERE ID=?");
+                    "UPDATE user_exercise SET EXECUTION_DATE=?," +
+                                                 "APPROVED=?," +
+                                                 "DONE=?," +
+                                                 "EXERCISE_ID=?, " +
+                                                 "USER_ID=? " +
+                            "WHERE ID=?");
             ps.setDate(1, userExercise.getExecutionDate());
             ps.setBoolean(2, userExercise.isApproved());
             ps.setBoolean(3, userExercise.isDone());
             ps.setLong(4, userExercise.getExerciseId());
-            ps.setLong(5, userExercise.getId());
+            ps.setLong(5, userExercise.getUserId());
+            ps.setLong(6, userExercise.getId());
             logger.info("Update " + userExercise);
             return ps.executeUpdate() == 1;
         } catch (ClassNotFoundException | SQLException e) {

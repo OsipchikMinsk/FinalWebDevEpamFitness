@@ -37,10 +37,15 @@ public class UserServiceImpl implements UserAuthService {
     @Override
     public boolean registerUser(User user, String password, String passwordConfirm) throws ServiceException {
         System.out.println("start validation");
-//        password = convertPasswordToHash(password);
         if (UserDataValidator.isValidDataOfUser(user, password, passwordConfirm)) {
+            System.out.println("user: " + user.getName());
+            System.out.println("user: " + user.getSurname());
+            System.out.println("user: " + user.getEmail());
+            System.out.println(password);
+            System.out.println(passwordConfirm);
             return register(user, password);
         }
+        System.out.println("failed");
         return false;
     }
 

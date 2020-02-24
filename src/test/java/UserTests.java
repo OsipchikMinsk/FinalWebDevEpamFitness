@@ -10,6 +10,7 @@ import com.epam.osipchik.gym.utils.AbonementUtils;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class UserTests {
 
@@ -26,9 +27,9 @@ public class UserTests {
     @Test
     public void userDbTest() throws DaoException {
         User user = new User();
-        user.setName("testName");
-        user.setSurname("testSurname");
-        user.setEmail("test@email.com");
+        user.setName("tesasdtName");
+        user.setSurname("tesasdtSurname");
+        user.setEmail("tasdest@email.com");
      if (  daoFactory.getUserDao().createUser(user)!= null) {
             System.out.println("YYra");
         }
@@ -68,8 +69,8 @@ public class UserTests {
                 Abonement abonement = new Abonement();
                 abonement.setUserId(user.getId());
                 abonement.setTypeId(abonementType.getId());
-                abonement.setOrderDate(abonementUtils.getSqlDate());
-                abonement.setStartDate(abonementUtils.getSqlDate());
+                abonement.setOrderDate(abonementUtils.getSqlDate(new Date()));
+                abonement.setStartDate(abonementUtils.getSqlDate(new Date()));
                 abonement.setFinishDate(abonementUtils.calculateFinishDate(new java.util.Date()));
                 for (int i = 0; i < 11; i++) {
                     int abonementCount = daoFactory.getAbonementDao().getAbonementsCountByUserId(user.getId());

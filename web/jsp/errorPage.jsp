@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Error page</title>
+    <c:import url="jsp/head/head.jsp"/>
 </head>
 <body>
 

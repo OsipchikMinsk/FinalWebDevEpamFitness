@@ -26,7 +26,7 @@ function registrationForm() {
     }
     if (registrationIsOk) {
         document.getElementById("reg_form").submit();
-    } else {
+      } else {
         alert(massage);
     }
 }

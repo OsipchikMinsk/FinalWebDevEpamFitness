@@ -1,28 +1,62 @@
 .user{
-    font: 10px "Open Sans";
-    color: blue;
+    font: 20px "Open Sans";
+    color: ghostwhite;
+    font-weight: 600;
+
+
 }
 .btn{
-    border: 2px solid black;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: 2px;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    font-size: 16px;
+    border-radius: 5px;
+
+    /*border: 2px solid black;
     background-color: white;
     color: black;
     padding: 14px 28px;
     font-size: 16px;
-    cursor: pointer;
+    cursor: pointer;*/
+}
+.btn.cancel:hover{
+    background-color:#f2f4f6;
+    color: #72192b;
+    opacity:1;
+    transition: 0.5s;
+    font-weight: 600;
+    letter-spacing: 5px;
+    border: 2px solid #ff75c9;
+
 }
 
 
 .registr {
-    border-color: #4CAF50;
-    color: green;
-    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: 2px;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
 }
 
 .registr:hover {
-    background-color: #4CAF50;
-    color: white;
+    background-color:#aaff9e;
+    color: #72192b;
     opacity:1;
     transition: 0.5s;
+    font-weight: bold;
+    letter-spacing: 5px;
+    border: 2px solid #ff75c9;
+
+
 }
 
 .signIn {
@@ -46,4 +80,50 @@
     opacity: 1;
     transition: 0.5s;
 }
+.form-group {
+    padding: 16px;
+    background-color: #e3ffef;
+}
+input[type=text], input[type=password],input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+}
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+a {
+    color: dodgerblue;
+}
+.signinFromReg{
+    background-color: #f1f1f1;
+    text-align: center;
+}
+.toUpp{
+    width: 100%;
+    height: 5%;
+
+}
+
+html {
+    scroll-behavior: smooth;
+}
+.message{
+    font-size: 20px;
+    margin-top: 20%;
+    color: #aaff9e;
+    width: 50%;
+    height: 10%;
+    border: 2px solid #ff75c9;
+    border-radius: 5px;
+}
+
+
+
+
+
 

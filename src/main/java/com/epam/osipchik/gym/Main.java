@@ -9,8 +9,8 @@ public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
     public static void main(String[] args) {
 
-        logger.info("hello logger");
-        logger.error("error logger");
+        logger.info("hello logger te");
+        logger.error("error logger te");
 
     }
 }

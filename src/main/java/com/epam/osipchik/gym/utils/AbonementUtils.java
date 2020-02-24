@@ -10,11 +10,11 @@ public class AbonementUtils {
 
 
 
-    public Date getSqlDate() {
-        return new Date(new java.util.Date().getTime());
+    public static Date getSqlDate(java.util.Date date) {
+        return new Date(date.getTime());
     }
 
-    public Date calculateFinishDate(java.util.Date startDate) {
+    public static Date calculateFinishDate(java.util.Date startDate) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(startDate);
         cal.add(Calendar.MONTH, 1);
@@ -24,7 +24,7 @@ public class AbonementUtils {
 //        sdf.format(new Date());
     }
 
-    public BigDecimal calculateTotalPrice(int price, int count) {
+    public static BigDecimal calculateTotalPrice(int price, int count) {
         if (count > 9) {
             return BigDecimal.valueOf(price - (price * 0.1));
         } else if (count > 4) {

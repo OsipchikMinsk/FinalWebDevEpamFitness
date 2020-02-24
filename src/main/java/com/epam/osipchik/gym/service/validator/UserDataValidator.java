@@ -11,8 +11,7 @@ public class UserDataValidator {
 
 
     private final static String EMAIL_PATTERN=
-            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+" +
-                    "[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+            "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
     private final static int MIN_PASSWORD_LENGTH=6;
     private final static int MIN_NAME_LENGTH=4;
     private final static int MIN_SURNAME_LENGTH=4;
@@ -40,9 +39,13 @@ public class UserDataValidator {
     }
     public static boolean isValidDataOfUser (User user, String password, String passwordConfirm){
         boolean isValidName = isValidName(user.getName());
+        System.out.println("name" + isValidName);
         boolean isValidSurname = isValidSurname(user.getSurname());
+        System.out.println("surname" + isValidSurname);
         boolean isValidEmail = isValidEmail(user.getEmail());
+        System.out.println("email" + isValidEmail);
         boolean isValidPassConfirm = isValidPasswordConfirm(password, passwordConfirm);
+        System.out.println("name" + isValidPassConfirm);
         return (isValidName)&&(isValidSurname)&&(isValidEmail)&&(isValidPassConfirm);
     }
 

@@ -2,6 +2,7 @@ package com.epam.osipchik.gym.dao.impl;
 
 import com.epam.osipchik.gym.config.DatabaseHandler;
 import com.epam.osipchik.gym.dao.ExerciseDao;
+import com.epam.osipchik.gym.entity.comment.Comment;
 import com.epam.osipchik.gym.entity.exercise.Exercise;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ExerciseDaoImpl implements ExerciseDao {
     private static final Logger logger = LogManager.getLogger(ExerciseDaoImpl.class);
@@ -88,4 +91,36 @@ public class ExerciseDaoImpl implements ExerciseDao {
             throw new DaoException(e);
         }
     }
+
+    @Override
+    public List<Exercise> getExercisesByAbonementType(Long abonementTypeId) throws DaoException {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        List<Exercise> exercises = new ArrayList<>();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+           // PreparedStatement ps = connection.prepareStatement("SELECT EXERCISE_ID FROM abonement_type_exercise WHERE ABONEMENT_TYPE_ID = ?");
+//            PreparedStatement ps = connection.prepareStatement("SELECT * FROM exercise WHERE exercise.ID = " +
+//                    "(SELECT EXERCISE_ID FROM abonement_type_exercise WHERE ABONEMENT_TYPE_ID = ?)");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM exercise JOIN abonement_type_exercise " +
+                                                                        "ON exercise.ID = abonement_type_exercise.EXERCISE_ID " +
+                                                                   "WHERE ABONEMENT_TYPE_ID = ?");
+            ps.setLong(1, abonementTypeId);
+            ResultSet resultSet = ps.executeQuery();
+
+                while (resultSet.next()) {
+                    Exercise exercise = new Exercise();
+                    System.out.println("ad: " + resultSet.getLong("ID"));
+                    System.out.println("name: " + resultSet.getString("NAME"));
+                    exercise.setId(resultSet.getLong("ID"));
+                    exercise.setName(resultSet.getString("NAME"));
+                    exercises.add(exercise);
+                }
+
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+        return exercises;
+    }
+
+
 }

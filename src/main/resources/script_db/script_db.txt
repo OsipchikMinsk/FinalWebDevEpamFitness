@@ -62,12 +62,18 @@ CREATE TABLE `gym`.`user_exercise` (
   `APPROVED` TINYINT NULL,
   `DONE` TINYINT NULL,
   `EXERCISE_ID` INT NOT NULL,
+  `USER_ID` INT NOT NULL,
   PRIMARY KEY (`ID`),
   UNIQUE INDEX `iduser_excercise_UNIQUE` (`ID` ASC) VISIBLE,
   INDEX `user_exercise_id_idx` (`EXERCISE_ID` ASC) VISIBLE,
   CONSTRAINT `user_exercise_id`
     FOREIGN KEY (`EXERCISE_ID`)
     REFERENCES `gym`.`exercise` (`ID`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION),
+  CONSTRAINT `user_user_id`
+    FOREIGN KEY (`ID`)
+    REFERENCES `gym`.`user` (`ID`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION);
 

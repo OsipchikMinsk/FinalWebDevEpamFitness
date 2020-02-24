@@ -10,6 +10,7 @@ public class UserExercise {
     private boolean isApproved;//назначено тренером
     private boolean isDone; //выполнено
     private long exerciseId;
+    private long userId;
 
     public long getId() {
         return id;
@@ -17,6 +18,14 @@ public class UserExercise {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public Date getExecutionDate() {

@@ -1,9 +1,6 @@
 package com.epam.osipchik.gym.command;
 
-import com.epam.osipchik.gym.command.impl.AuthorizationUserCommand;
-import com.epam.osipchik.gym.command.impl.CommandNotFound;
-import com.epam.osipchik.gym.command.impl.MainPage;
-import com.epam.osipchik.gym.command.impl.RegistrationUserCommand;
+import com.epam.osipchik.gym.command.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +13,10 @@ public class CommandProvider {
         commands.put(CommandType.REGISTRATION, new RegistrationUserCommand());
         commands.put(CommandType.COMMAND_NOT_FOUND,new CommandNotFound());
         commands.put(CommandType.MAIN_PAGE, new MainPage());
+        commands.put(CommandType.SHOW_ABONEMENTS, new ShowAbonements());
+        commands.put(CommandType.REGISTRATION_PAGE, new RegistrationPage());
+        commands.put(CommandType.AUTHORIZATION_PAGE, new AuthorizationPage());
+        commands.put(CommandType.BUY_ABONEMENT,new BuyAbonement());
     }
     public static CommandProvider getInstance(){
         return instance;

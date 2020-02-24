@@ -7,6 +7,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.List;
+import java.util.Map;
 
 
 public class AbonementDaoImpl implements AbonementDao {
@@ -15,17 +17,22 @@ public class AbonementDaoImpl implements AbonementDao {
     @Override
     public Abonement create(Abonement abonement) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        System.out.println("start creating...");
         try (Connection connection = databaseHandler.getDbConnection()){
 
+
             PreparedStatement ps = connection.prepareStatement("INSERT INTO abonement VALUES (NULL, ?, ?, ?, ?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS);
+                    PreparedStatement.RETURN_GENERATED_KEYS);
+            System.out.println("seeeeting: " + abonement.getUserId());
             ps.setLong(1, abonement.getUserId());
             ps.setLong(2, abonement.getTypeId());
             ps.setDate(3, abonement.getStartDate());
             ps.setDate(4, abonement.getFinishDate());
             ps.setDate(5, abonement.getOrderDate());
             ps.setBigDecimal(6, abonement.getTotalPrice());
-            if (ps.executeUpdate() == 1) {
+            int result = ps.executeUpdate();
+            System.out.println("--ABONEMENT RESULTS: " + result);
+            if (result == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     abonement.setId(generatedKeys.getLong(1));
@@ -107,6 +114,11 @@ public class AbonementDaoImpl implements AbonementDao {
             throw  new DaoException(e);
         }
 
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllAbonementsTypeData() {
+        return null;
     }
 
 

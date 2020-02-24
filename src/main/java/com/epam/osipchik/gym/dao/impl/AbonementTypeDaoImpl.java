@@ -3,10 +3,14 @@ package com.epam.osipchik.gym.dao.impl;
 import com.epam.osipchik.gym.config.DatabaseHandler;
 import com.epam.osipchik.gym.dao.AbonementTypeDao;
 import com.epam.osipchik.gym.entity.abonement.AbonementType;
+import com.epam.osipchik.gym.entity.exercise.Exercise;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class AbonementTypeDaoImpl implements AbonementTypeDao {
 private static final Logger logger = LogManager.getLogger(AbonementTypeDaoImpl.class);
@@ -42,7 +46,7 @@ private static final Logger logger = LogManager.getLogger(AbonementTypeDaoImpl.c
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try {
             try (Connection connection = databaseHandler.getDbConnection()) {
-                PreparedStatement ps = connection.prepareStatement("SELECT* FROM abonement_type WHERE ID=?");
+                PreparedStatement ps = connection.prepareStatement("SELECT * FROM abonement_type WHERE ID=?");
                 ps.setLong(1, id);
                 ResultSet resultSet = ps.executeQuery();
                 if (resultSet.next()) {
@@ -94,5 +98,33 @@ private static final Logger logger = LogManager.getLogger(AbonementTypeDaoImpl.c
             logger.error(e);
             throw new DaoException(e);
         }
+    }
+
+    @Override
+    public Integer getAbonementPrice(Long abonementTypeId) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<AbonementType> getAllAbonementsTypeData() throws DaoException {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM abonement_type");
+            ResultSet resultSet = ps.executeQuery();
+            List<AbonementType> abonementTypes = new ArrayList<>();
+            while (resultSet.next()) {
+                AbonementType abonementType = new AbonementType();
+                System.out.println("aabon ID: " + resultSet.getLong("ID"));
+                abonementType.setId(resultSet.getLong("ID"));
+                abonementType.setName(resultSet.getString("NAME"));
+                abonementType.setPrice(resultSet.getInt("PRICE"));
+                abonementTypes.add(abonementType);
+            }
+            return abonementTypes;
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
+        }
+
     }
 }
