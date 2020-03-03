@@ -23,7 +23,6 @@ public class UserDaoImpl implements UserDao{
         } catch (ClassNotFoundException | SQLException e) {
             logger.error(e);
             throw new DaoException(e);
-
         }
         return null;
     }
@@ -60,7 +59,7 @@ public class UserDaoImpl implements UserDao{
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
         try (Connection connection = databaseHandler.getDbConnection()) {
             PreparedStatement ps = connection.prepareStatement("INSERT INTO user VALUES (NULL, ?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS);
+                    PreparedStatement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getName());
             ps.setString(2, user.getSurname());
             ps.setString(3, user.getEmail());

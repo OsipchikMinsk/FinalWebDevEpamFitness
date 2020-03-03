@@ -5,10 +5,7 @@ import com.epam.osipchik.gym.command.CommandProvider;
 import com.epam.osipchik.gym.command.CommandType;
 import com.epam.osipchik.gym.command.impl.CommandException;
 import com.epam.osipchik.gym.command.impl.CommandNotFound;
-import com.epam.osipchik.gym.controller.util.DispatcherHelper;
-import com.epam.osipchik.gym.controller.util.JspTagName;
-import com.epam.osipchik.gym.controller.util.RequestAttributeValue;
-import com.epam.osipchik.gym.controller.util.RequestParameterValue;
+import com.epam.osipchik.gym.controller.util.*;
 import com.epam.osipchik.gym.dao.impl.DaoException;
 import com.epam.osipchik.gym.service.impl.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +16,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Locale;
 
 @WebServlet(name = "Controller")
 public class Controller extends HttpServlet {
@@ -67,4 +66,6 @@ public class Controller extends HttpServlet {
             DispatcherHelper.forwardToJsp(request,response, JspTagName.ERROR_PAGE);
         }
     }
+
+
 }

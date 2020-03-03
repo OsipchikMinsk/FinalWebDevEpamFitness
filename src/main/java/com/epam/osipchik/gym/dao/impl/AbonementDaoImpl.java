@@ -7,23 +7,22 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class AbonementDaoImpl implements AbonementDao {
+
     private static final Logger logger = LogManager.getLogger(AbonementDaoImpl.class);
 
     @Override
     public Abonement create(Abonement abonement) throws DaoException {
         DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
-        System.out.println("start creating...");
         try (Connection connection = databaseHandler.getDbConnection()){
-
-
             PreparedStatement ps = connection.prepareStatement("INSERT INTO abonement VALUES (NULL, ?, ?, ?, ?, ?, ?)",
                     PreparedStatement.RETURN_GENERATED_KEYS);
-            System.out.println("seeeeting: " + abonement.getUserId());
             ps.setLong(1, abonement.getUserId());
             ps.setLong(2, abonement.getTypeId());
             ps.setDate(3, abonement.getStartDate());
@@ -31,7 +30,6 @@ public class AbonementDaoImpl implements AbonementDao {
             ps.setDate(5, abonement.getOrderDate());
             ps.setBigDecimal(6, abonement.getTotalPrice());
             int result = ps.executeUpdate();
-            System.out.println("--ABONEMENT RESULTS: " + result);
             if (result == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
                 if (generatedKeys.next()) {
@@ -113,14 +111,36 @@ public class AbonementDaoImpl implements AbonementDao {
             logger.error(e);
             throw  new DaoException(e);
         }
-
     }
 
     @Override
-    public List<Map<String, Object>> getAllAbonementsTypeData() {
-        return null;
-    }
+    public List<Map<String, Object>> getAllAbonementsByUserId(long userId) throws DaoException {
+        DatabaseHandler databaseHandler = DatabaseHandler.getInstance();
+        try (Connection connection = databaseHandler.getDbConnection()) {
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT abonement.ID AS ABON_ID, abonement.USER_ID AS ABON_USER_ID, abonement.TYPE_ID AS ABON_TYPE_ID, " +
+                            "abonement.START_DATE AS START_DATE, abonement.FINISH_DATE AS FINISH_DATE," +
+                    "abonement.TOTAL_PRICE AS TOTAL_PRICE FROM abonement JOIN abonement_type ON abonement.TYPE_ID = abonement_type.ID  WHERE abonement.USER_ID = ?");
+            ps.setLong(1, userId);
+            ResultSet resultSet = ps.executeQuery();
+            List<Map<String, Object>> abonements = new ArrayList<>();
+            while (resultSet.next()){
+                Map<String, Object> abonement = new HashMap<>();
+                abonement.put("ABON_ID", resultSet.getLong(1));
+                abonement.put("ABON_USER_ID", resultSet.getLong(2));
+                abonement.put("ABON_TYPE_ID", resultSet.getLong(3));
+                abonement.put("START_DATE", resultSet.getDate(4));
+                abonement.put("FINISH_DATE", resultSet.getDate(5));
+                abonement.put("TOTAL_PRICE", resultSet.getLong(6));
+                abonements.add(abonement);
+                return abonements;
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            logger.error(e);
+            throw new DaoException(e);
 
+        }return null;
+    }
 
     @Override
     public int getAbonementsCountByUserId(long id) throws DaoException {

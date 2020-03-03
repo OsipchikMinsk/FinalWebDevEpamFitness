@@ -11,6 +11,7 @@ public class DaoFactory {
     private final UserExerciseDao userExerciseDao = new UserExerciseDaoImpl();
     private final UserCommentDao userCommentDao = new UserCommentDaoImpl();
     private final RoleDao roleDao = new RoleDaoImpl();
+    private final WalletDao walletDao = new WalletDaoImpl();
 
 
 
@@ -47,5 +48,8 @@ public class DaoFactory {
 
     public RoleDao getRoleDao() {
         return roleDao;
+    }
+    public WalletDao getWalletDao() {
+        return walletDao;
     }
 }

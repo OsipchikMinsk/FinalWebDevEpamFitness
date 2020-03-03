@@ -70,6 +70,8 @@
         <filter-name>Charset</filter-name>
         <filter-class>com.epam.osipchik.gym.controller.filter.CharSetFilter</filter-class>
     </filter>
+
+
     <filter-mapping>
         <filter-name>Charset</filter-name>
         <servlet-name>Controller</servlet-name>

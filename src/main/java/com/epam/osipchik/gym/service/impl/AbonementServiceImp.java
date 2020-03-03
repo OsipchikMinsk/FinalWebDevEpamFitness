@@ -64,16 +64,12 @@ public class AbonementServiceImp implements AbonementService {
         Abonement abonement = new Abonement();
         abonement.setUserId(userId);
         abonement.setTypeId(abonementTypeId);
-
         Date date = new Date();
         abonement.setStartDate(AbonementUtils.getSqlDate(date));
         abonement.setOrderDate(AbonementUtils.getSqlDate(date));
         abonement.setFinishDate(AbonementUtils.calculateFinishDate(date));
-
         int count = abonementDao.getAbonementsCountByUserId(userId);
         abonement.setTotalPrice(AbonementUtils.calculateTotalPrice(rawPrice, count));
-
-        System.out.println("gog og og ogo CREATE ABONEMENT");
         abonementDao.create(abonement);
 
         List<UserExercise> userExercises = new ArrayList<>();

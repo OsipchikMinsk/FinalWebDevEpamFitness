@@ -2,11 +2,11 @@ package com.epam.osipchik.gym.service.impl;
 
 import com.epam.osipchik.gym.service.AbonementService;
 import com.epam.osipchik.gym.service.CommentService;
-import com.epam.osipchik.gym.service.UserAuthService;
+import com.epam.osipchik.gym.service.UserService;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
-    private final UserAuthService userService = new UserServiceImpl();
+    private final UserService userService = new UserServiceImpl();
     private final AbonementService abonemnetService = new AbonementServiceImp();
     private final CommentService commentService = new CommentServiceImpl();
 
@@ -18,7 +18,7 @@ public class ServiceFactory {
         return instance;
     }
 
-    public UserAuthService getUserService() {
+    public UserService getUserService() {
         return userService;
     }
 

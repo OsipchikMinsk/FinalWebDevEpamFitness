@@ -23,16 +23,13 @@ public class UserExerciseDaoImpl implements UserExerciseDao {
             ps.setLong(4, userExercise.getExerciseId());
             ps.setLong(5, userExercise.getUserId());
             int state = ps.executeUpdate();
-            System.out.println("STATE: " + state);
             if (state == 1) {
                 ResultSet generatedKeys = ps.getGeneratedKeys();
-                System.out.println(generatedKeys);
                 if (generatedKeys != null && generatedKeys.next()) {
                     userExercise.setId(generatedKeys.getLong(1));
                 }
             }
             logger.info("Created " + userExercise);
-            System.out.println("created user exersize: " + userExercise.getUserId());
             return userExercise;
         } catch (ClassNotFoundException | SQLException e) {
             logger.error(e);

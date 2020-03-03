@@ -114,7 +114,6 @@ private static final Logger logger = LogManager.getLogger(AbonementTypeDaoImpl.c
             List<AbonementType> abonementTypes = new ArrayList<>();
             while (resultSet.next()) {
                 AbonementType abonementType = new AbonementType();
-                System.out.println("aabon ID: " + resultSet.getLong("ID"));
                 abonementType.setId(resultSet.getLong("ID"));
                 abonementType.setName(resultSet.getString("NAME"));
                 abonementType.setPrice(resultSet.getInt("PRICE"));

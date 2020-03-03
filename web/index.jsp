@@ -6,19 +6,18 @@
 <head>
 
     <title>Main Page</title>
-
     <c:import url="jsp/head/head.jsp" charEncoding="utf-8"/>
     <c:import url="jsp/header/header.jsp" charEncoding="utf-8"/>
-
 
 </head>
 <body>
 
 
 <div class="user">
-    <p>${userSurename}</p>
+    
+   <c:if test="${not empty nameOfUser}"><p>Hello ${nameOfUser}!</p> </c:if>
 </div>
-<div class="message">
+<div class="message" style="color: #0f0425">
     <c:if test="${not empty message}">
         <p>${message}.</p>
     </c:if>
@@ -45,8 +44,6 @@
     </div>
 </div>--%>
 <c:import url="jsp/footer/footer.jsp" charEncoding="utf-8"/>
-
-
 
 </body>
 </html>

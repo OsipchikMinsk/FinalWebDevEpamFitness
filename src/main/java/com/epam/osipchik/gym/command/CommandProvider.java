@@ -17,6 +17,9 @@ public class CommandProvider {
         commands.put(CommandType.REGISTRATION_PAGE, new RegistrationPage());
         commands.put(CommandType.AUTHORIZATION_PAGE, new AuthorizationPage());
         commands.put(CommandType.BUY_ABONEMENT,new BuyAbonement());
+        commands.put(CommandType.ENGLISH_LANG, new EnglishLang());
+        commands.put(CommandType.RUSSIAN_LANG,new RussianLang());
+        commands.put(CommandType.LOG_OUT, new LogOut());
     }
     public static CommandProvider getInstance(){
         return instance;

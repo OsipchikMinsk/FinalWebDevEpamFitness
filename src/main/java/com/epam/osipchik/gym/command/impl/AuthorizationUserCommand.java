@@ -4,9 +4,11 @@ import com.epam.osipchik.gym.command.Command;
 import com.epam.osipchik.gym.command.CommandProvider;
 import com.epam.osipchik.gym.command.CommandType;
 import com.epam.osipchik.gym.controller.util.RequestAttributeValue;
+import com.epam.osipchik.gym.controller.util.SessionWorker;
 import com.epam.osipchik.gym.dao.impl.DaoException;
 import com.epam.osipchik.gym.entity.user.User;
-import com.epam.osipchik.gym.service.UserAuthService;
+import com.epam.osipchik.gym.entity.user.Wallet;
+import com.epam.osipchik.gym.service.UserService;
 import com.epam.osipchik.gym.service.impl.ServiceException;
 import com.epam.osipchik.gym.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +21,7 @@ import java.io.IOException;
 
 public class AuthorizationUserCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AuthorizationUserCommand.class);
-    private UserAuthService authService = ServiceFactory.getInstance().getUserService();
+    private UserService authService = ServiceFactory.getInstance().getUserService();
     private static final String INVALID_USER_DATA = "Invalid password or login";
     private static final String REGISTRATION_IS_OK = "Authorization is OK!";
 
@@ -31,13 +33,20 @@ public class AuthorizationUserCommand implements Command {
             throw new CommandException("Invalid request");
         }
         User user;
+        String role;
+        Wallet wallet;
         try {
             user = authService.getUserByEmail(email);
             user= authService.authorize(user,password);
+            role = authService.getUserRoleByUserId(user);
+            wallet = authService.getUserWalletByUserId(user);
         } catch (ServiceException e){
             logger.error(e);
             throw new  CommandException (e);
         }
+        HttpSession session = SessionWorker.createSession(request);
+        SessionWorker.addUserToSession(session, user,role,wallet);
+
         Command command;
         if (user == null){
             request.setAttribute(RequestAttributeValue.MESSAGE, INVALID_USER_DATA);

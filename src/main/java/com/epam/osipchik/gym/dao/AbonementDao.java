@@ -12,6 +12,8 @@ public interface AbonementDao {
     Abonement getAbonementById (long id) throws DaoException;
     boolean update (Abonement abonement) throws DaoException;
     boolean delete (Abonement abonement) throws DaoException;
-    List<Map<String, Object>> getAllAbonementsTypeData();
+    List<Map<String, Object>> getAllAbonementsByUserId(long userId) throws DaoException;
+
+
 
 }

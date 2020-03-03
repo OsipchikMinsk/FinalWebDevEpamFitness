@@ -1,9 +1,7 @@
 .user{
     font: 20px "Open Sans";
-    color: ghostwhite;
+    color: #0f0425;
     font-weight: 600;
-
-
 }
 .btn{
     background-color: #4CAF50;
@@ -114,7 +112,7 @@ html {
 }
 .message{
     font-size: 20px;
-    margin-top: 20%;
+    margin-bottom: 10%;
     color: #aaff9e;
     width: 50%;
     height: 10%;

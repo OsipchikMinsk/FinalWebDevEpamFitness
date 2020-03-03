@@ -7,19 +7,18 @@
     z-index: 1;
 }
 
-.sidebar a {
+.sidebar a{
     float: left;
     padding-top: 10px;
     padding-bottom: 10px;
     color: white;
     text-decoration: none;
     font-size: 20px;
-    width: 25%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
+    width: 20%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
     text-align: center; /* If you want the text to be centered */
 
 }
-
-.sidebar a:hover {
+.sidebar a:hover{
     background-color: #000;
     transition: 0.3s;
     font-weight: 600;
@@ -44,4 +43,5 @@
         text-align: left;
         z-index: 0;
     }
+
 }

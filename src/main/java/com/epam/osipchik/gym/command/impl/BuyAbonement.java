@@ -20,12 +20,11 @@ public class BuyAbonement implements Command {
     private final AbonementService abonementService = ServiceFactory.getInstance().getAbonemnetService();
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, DaoException, ServiceException, CommandException {
+
         String abonementTypeId = request.getParameter("abonementTypeId");
-        System.out.println("abonementTypeId: " + abonementTypeId);
         Map<String, Object> abonementData = abonementService.buyAbonementByAbonementTypeId(Long.parseLong(abonementTypeId));
-        abonementData.forEach((k, v) -> {
-            System.out.println(k + " : " + v);
-        });
+
+        //todo forward
 
 
 

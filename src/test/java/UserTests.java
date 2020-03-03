@@ -2,7 +2,7 @@ import com.epam.osipchik.gym.dao.impl.*;
 import com.epam.osipchik.gym.entity.abonement.Abonement;
 import com.epam.osipchik.gym.entity.abonement.AbonementType;
 import com.epam.osipchik.gym.entity.user.User;
-import com.epam.osipchik.gym.service.UserAuthService;
+import com.epam.osipchik.gym.service.UserService;
 import com.epam.osipchik.gym.service.impl.ServiceException;
 import com.epam.osipchik.gym.service.impl.UserServiceImpl;
 import com.epam.osipchik.gym.service.impl.ServiceFactory;
@@ -19,7 +19,7 @@ public class UserTests {
    // private AbonementTypeDao abonementTypeDao = new AbonementTypeDaoImpl();
     //private AbonementDao abonementDao = new AbonementDaoImpl();
     private AbonementUtils abonementUtils = new AbonementUtils();
-    private UserAuthService authorizationService = new UserServiceImpl();
+    private UserService authorizationService = new UserServiceImpl();
     //UserDataValidator userDataValidator = new UserDataValidator();
 
     DaoFactory daoFactory = DaoFactory.getInstance();
